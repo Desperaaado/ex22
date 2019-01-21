@@ -1,3 +1,5 @@
+from ex22.BSTree import BSTree
+
 class SuffixArrays(object):
 
     def __init__(self, string):
@@ -79,3 +81,77 @@ class SuffixArrays(object):
                     e_num = i
                     break
             return self.array_s[s_num : e_num + 1]
+
+
+class BSTreeSuffixArrays(object):
+
+    def __init__(self, string):
+        self.string = string
+        a_bst = BSTree()
+        
+        for item in self.str_split(string):
+            key, value = item
+            a_bst.set(key, value)
+
+        self.bstree = a_bst
+
+    def str_split(self, string):
+        split_array = []
+        for index in range(0, len(string)):
+            split_array.append((string[index:], index))
+        return split_array
+
+    def search(self, what):
+        node = self.bstree.root
+        while node:
+            the_key = node.key
+            print('node ', node)
+            if the_key == what:
+                return the_key
+            elif the_key > what:
+                node = node.left
+            elif the_key < what:
+                node = node.right
+
+        return -1
+
+    def find_shortest(self, match):
+        return self.search(match)
+
+    # def find_longest(self, match):
+    #     sarray_i, instr_i = self.search(match)
+    #     if sarray_i == -1: return -1, -1
+
+    #     test, instr_i = self.array_s.find_by_index(sarray_i).value
+    #     longest, longest_i = test, instr_i
+
+    #     while test.startswith(match):
+    #         if len(test) > len(longest):
+    #             longest, longest_i = test, instr_i
+
+    #         sarray_i += 1
+
+    #         try:
+    #             test, instr_i = self.array_s.find_by_index(sarray_i).value
+    #         except IndexError:
+    #             break
+
+    #     return longest, longest_i
+
+    # def find_all(self, match):
+        # sarray_i, inst_i = self.search(match)
+        # if sarray_i == -1: return -1, -1
+
+        # test, instr_i = self.array_s.find_by_index(sarray_i).value
+        # results = []
+
+        # while test.startswith(match):
+        #     results.append((test, instr_i))
+        #     sarray_i += 1
+
+        #     try:
+        #         test, instr_i = self.array_s.find_by_index(sarray_i).value
+        #     except IndexError:
+        #         break
+
+        # return results
